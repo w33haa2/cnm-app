@@ -83,14 +83,31 @@ export const constantRoutes = [
       }
     ]
   },
+  /**
+   * Children refers to routes that is under a main route,
+   * Main routes refer to a route that has many sub-routes (e.g Employees route)
+   * Main and children routes requires meta for info display
+   * Component refers to the component that it will render on the container tab
+   */
   {
+    name: 'Documentation 1',
     path: '/documentation',
+    meta: {
+      title: 'Documentation 1',
+      icon: 'nested'
+    },
     component: Layout,
     children: [
       {
         path: 'index',
         component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
+        name: 'Documentation 1',
+        meta: { title: 'Documentation', icon: 'documentation', affix: true }
+      },
+      {
+        path: 'index2',
+        component: () => import('@/views/documentation/index'),
+        name: 'Documentation 2',
         meta: { title: 'Documentation', icon: 'documentation', affix: true }
       }
     ]
