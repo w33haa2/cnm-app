@@ -133,6 +133,9 @@ export default {
         this.loading = true
       } else {
         this.loading = false
+        this.$router.push({
+          path: '/dashboard'
+        })
       }
     }
   },

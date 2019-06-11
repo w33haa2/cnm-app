@@ -1,9 +1,9 @@
-import router from '../../router';
+
 import SecureLS from 'secure-ls'
 import axios from 'axios'
 import { STATE_API } from '@/utils/api/api-helper'
 import { generateMutationTypes } from '@/utils/api/state-mutation'
-
+import router, { resetRouter } from '@/router'
 const LOGIN = generateMutationTypes('auth', 'LOGIN')
 const LOGOUT = generateMutationTypes('auth', 'LOGOUT')
 
@@ -45,13 +45,25 @@ const mutations = {
       fail: true
     }
     state.token = 'testtoken123'
-    ls.set('token',{ access_token: state.token })
+    ls.set('token', { access_token: state.token })
+    this.$router.push(`/dashboard`)
   },
   [LOGOUT.success](state, payload) {
     state.token = null
     state.userFullName = null
     state.userEmail = null
     state.loginSuccess = false
+    ls.removeAll()
+    router.push({
+      path: '/login'
+    })
+  },
+  [LOGOUT.fail](state, payload) {
+    state.token = null
+    state.userFullName = null
+    state.userEmail = null
+    state.loginSuccess = false
+    resetRouter()
     ls.removeAll()
     router.push({
       path: '/login'
