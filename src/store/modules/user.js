@@ -44,6 +44,8 @@ const mutations = {
       success: false,
       fail: true
     }
+    state.token = 'testtoken123'
+    ls.set('token',{ access_token: state.token })
   },
   [LOGOUT.success](state, payload) {
     state.token = null
