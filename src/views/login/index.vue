@@ -46,44 +46,20 @@
       </el-tooltip>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div style="position:relative">
-        <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">Username : editor</span>
-          <span>Password : any</span>
-        </div>
-
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
-        </el-button>
-      </div>
     </el-form>
-
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
-      Can not be simulated on local, so please combine you own business simulation! ! !
-      <br>
-      <br>
-      <br>
-      <social-sign />
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-import SocialSign from './components/SocialSignin'
+import { validEmail } from '@/utils/validate'
+import { Message } from 'element-ui'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Login',
-  components: { SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+      if (!validEmail(value)) {
+        callback(new Error('Please enter the correct email'))
       } else {
         callback()
       }
@@ -97,8 +73,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -131,11 +107,14 @@ export default {
     loginState({ initial, success, fail }) {
       if (initial) {
         this.loading = true
-      } else {
+      } else if (success) {
         this.loading = false
         this.$router.push({
           path: '/dashboard'
         })
+      } else if (fail) {
+        Message.error({ message: 'Invalid username or password', duration: '2500' })
+        this.loading = false
       }
     }
   },
@@ -174,7 +153,15 @@ export default {
       })
     },
     handleLogin() {
-      this.authenticate()
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          const data = {
+            username: this.loginForm.username,
+            password: this.loginForm.password
+          }
+          this.authenticate({ data })
+        }
+      })
     },
     getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {
