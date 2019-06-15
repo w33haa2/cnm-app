@@ -1,9 +1,9 @@
-import router from '../../router';
+
 import SecureLS from 'secure-ls'
-import axios from 'axios'
+// import axios from 'axios'
 import { STATE_API } from '@/utils/api/api-helper'
 import { generateMutationTypes } from '@/utils/api/state-mutation'
-
+import router, { resetRouter } from '@/router'
 const LOGIN = generateMutationTypes('auth', 'LOGIN')
 const LOGOUT = generateMutationTypes('auth', 'LOGOUT')
 
@@ -31,14 +31,17 @@ const mutations = {
       fail: false
     }
   },
-  [LOGIN.success](state) {
+  [LOGIN.success](state, payload) {
     state.loggingInState = {
       initial: false,
       success: true,
       fail: false
     }
+    state.token = payload.meta.access_token
+    ls.set('token', { access_token: state.token })
+    router.push(`/dashboard`)
   },
-  [LOGIN.fail](state) {
+  [LOGIN.fail](state, payload) {
     state.loggingInState = {
       initial: false,
       success: false,
@@ -50,10 +53,17 @@ const mutations = {
     state.userFullName = null
     state.userEmail = null
     state.loginSuccess = false
+    resetRouter()
     ls.removeAll()
     router.push({
       path: '/login'
     })
+  },
+  [LOGOUT.fail](state, payload) {
+    state.token = null
+    state.userFullName = null
+    state.userEmail = null
+    state.loginSuccess = false
   }
   // SET_TOKEN: (state, token) => {
   //   state.token = token
@@ -75,11 +85,11 @@ const mutations = {
 const actions = {
   authenticate({ commit }, params) {
     const slug = 'auth.login'
-    STATE_API({ slug, params }, commit, [LOGIN.initial, LOGIN.success, LOGIN.fail])
+    STATE_API({ slug, params: params.data }, commit, [LOGIN.initial, LOGIN.success, LOGIN.fail])
   },
   logout({ commit }) {
     const slug = 'auth.logout'
-    STATE_API({ slug }, commit, [LOGOUT.initial, LOGOUT.success, LOGOUT.fail])
+    STATE_API({ slug }, commit, [LOGOUT.success, LOGOUT.fail])
   }
   // user login
   // login({ commit }, userInfo) {

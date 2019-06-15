@@ -39,12 +39,11 @@ export function API(slug, payload = {}, headers = {}) {
 
     let ls = new SecureLS({
       encodingType: 'aes'
-    });
+    })
 
     let accessToken = ls.get('token').access_token
 
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-
     const response = axios({
       ...params,
       data: { ...payload },
