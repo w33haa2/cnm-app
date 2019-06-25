@@ -33,6 +33,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    // proxy: process.env.VUE_APP_BASE_API
     proxy: process.env.VUE_APP_BASE_API
     //   {
     //   // change xxx-api/login => mock/login

@@ -18,11 +18,11 @@ export function API(slug, payload = {}, headers = {}) {
   if (check) {
     let params = {
       url: createEndpointUrl([
-        process.env.VUE_APP_BASE_API,
+        'http://localhost:8080',
         createEndpointPrefix(slug, api),
         formatEndpointUrl(endpoint, payload),
       ]),
-      method: endpoint.$method,
+      method: endpoint.$method
     }
 
     params.url = removeTrailingSlash(params.url)
