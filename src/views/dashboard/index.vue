@@ -7,14 +7,15 @@
 <script>
 import { mapGetters } from 'vuex'
 import adminDashboard from './admin'
+import hrDashboard from './hr'
 import editorDashboard from './editor'
 
 export default {
   name: 'Dashboard',
-  components: { adminDashboard, editorDashboard },
+  components: { adminDashboard, editorDashboard, hrDashboard },
   data() {
     return {
-      currentRole: 'adminDashboard'
+      currentRole: 'hrDashboard'
     }
   },
   computed: {
@@ -29,3 +30,4 @@ export default {
   // }
 }
 </script>
+
