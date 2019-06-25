@@ -12,8 +12,8 @@
         </pan-thumb>
       </div>
       <div class="box-center">
-        <div class="user-name text-center">{{ user.name }}</div>
-        <div class="user-role text-center text-muted">{{ user.role | uppercaseFirst }}</div>
+        <div class="user-name text-center">{{ user.info.shortened_name }}</div>
+        <div class="user-role text-center text-muted">{{ user.company_details.position | uppercaseFirst }}</div>
       </div>
     </div>
 
