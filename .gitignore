@@ -11,6 +11,7 @@ selenium-debug.log
 .env.development
 .env.production
 .env.staging
+/src/utils/git
 # Editor directories and files
 .idea
 .vscode
