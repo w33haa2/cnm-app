@@ -37,9 +37,11 @@ const mutations = {
       success: true,
       fail: false
     }
-    state.token = payload.meta.access_token
+    state.token = payload.meta.token.access_token
     ls.set('token', { access_token: state.token })
-    router.push(`/dashboard`)
+    router.push({
+      path: '/dashboard'
+    })
   },
   [LOGIN.fail](state, payload) {
     state.loggingInState = {
