@@ -189,3 +189,38 @@ aside {
 .multiselect--active {
   z-index: 1000 !important;
 }
+
+// =======================================================================
+// ssws dev custom css
+// =======================================================================
+
+.text-muted{
+  color: #777;
+}
+
+.fs-point-eight-em{
+ font-size:.8em
+}
+
+
+.select-display-table-records{
+  width:75px;
+}
+
+
+.cur-p{
+  cursor:pointer;
+}
+
+.bg-hr:hover{
+  border-radius:50%;
+  background-color: rgb(189, 189, 189);
+  padding:4px;
+  width:15px;
+  height:15px;
+  position:relative;
+}
+
+.bg-hr{
+  padding:4px;
+}

@@ -12,6 +12,10 @@ const getters = {
   permission_routes: state => state.permission.routes,
   errorLogs: state => state.errorLog.logs,
   // log in state
-  loginState: state => state.user.loggingInState
+  loginState: state => state.user.loggingInState,
+  // users
+  employees: state => state.employee.employees,
+  allPosition: state => state.employee.accesslevels,
+  formResponse: state => state.employee.form_request_response
 }
 export default getters
